@@ -8,10 +8,10 @@ access it with `require('assert')`.
 ### assert.fail(actual, expected, message, operator)
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
 _message_: `string` Exception message
-_operator_: `string` The operator used to compare actual and expected
+- _operator_: `string` The operator used to compare actual and expected
 values
 
 #### Return value
@@ -26,8 +26,8 @@ Fail always throws an AssertionError using the provided arguments
 ### assert.ok(value, [message])
 
 #### Arguments
-_value_: `mixed` Actual value to evaluate
-_message (optional)_: `string` Exception message
+- _value_: `mixed` Actual value to evaluate
+- - _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -41,9 +41,9 @@ Tests if value is a `true` value, it is equivalent to `assert.equal(true, value,
 ### assert.equal(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -57,9 +57,9 @@ Tests shallow, coercive equality with the equal comparison operator ( `==` ).
 ### assert.notEqual(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -73,9 +73,9 @@ Tests shallow, coercive non-equality with the not equal comparison operator ( `!
 ### assert.deepEqual(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -89,9 +89,9 @@ Tests for deep equality.
 ### assert.notDeepEqual(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -105,9 +105,9 @@ Tests for any deep inequality.
 ### assert.strictEqual(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -121,9 +121,9 @@ Tests strict equality, as determined by the strict equality operator ( `===` )
 ### assert.notStrictEqual(actual, expected, [message])
 
 #### Arguments
-_actual_: `mixed` Actual value to evaluate
-_expected_: `mixed` Expected value to compare actual value to
-_message (optional)_: `string` Exception message
+- _actual_: `mixed` Actual value to evaluate
+- _expected_: `mixed` Expected value to compare actual value to
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -137,11 +137,11 @@ Tests strict non-equality, as determined by the strict not equal operator ( `!==
 ### assert.throws(block, [error], [message])
 
 #### Arguments
-_block_: `function` Code to be executed to throw an error (or not) wrapped in a
+- _block_: `function` Code to be executed to throw an error (or not) wrapped in a
 function
-_error_: `Object`|`RegExp`|`function` Object constructor, regular
+- _error_: `Object`|`RegExp`|`function` Object constructor, regular
 expression or function that will match the error being tested for 
-_message (optional)_: `string` Exception message
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
@@ -188,11 +188,11 @@ Custom error validation:
 ### assert.doesNotThrow(block, [error], [message])
 
 #### Arguments
-_block_: `function` Code to be executed to throw an error (or not) wrapped in a
+- _block_: `function` Code to be executed to throw an error (or not) wrapped in a
 function
-_error_: `Object`|`RegExp`|`function` Object constructor, regular
+- _error_: `Object`|`RegExp`|`function` Object constructor, regular
 expression or function that will match the error being tested for 
-_message (optional)_: `string` Exception message
+- _message (optional)_: `string` Exception message
 
 #### Return value
 Does not return a value
