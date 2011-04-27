@@ -1,11 +1,14 @@
-## Assert
+# Assert
 
 This module is used for writing unit tests for your applications, you can
 access it with `require('assert')`.
 
-**Module Methods**
+##Module Classes
+This module has no classes.
 
-### assert.fail(actual, expected, message, operator)
+##Module Methods
+
+### fail(actual, expected, message, operator)
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -23,7 +26,7 @@ Does not return a value
 #### Description
 Fail always throws an AssertionError using the provided arguments
 
-### assert.ok(value, [message])
+### ok(value, [message])
 
 #### Arguments
 - _value_: `mixed` Actual value to evaluate
@@ -38,7 +41,7 @@ Does not return a value
 #### Description
 Tests if value is a `true` value, it is equivalent to `assert.equal(true, value, message);`
 
-### assert.equal(actual, expected, [message])
+### equal(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -54,7 +57,7 @@ Does not return a value
 #### Description
 Tests shallow, coercive equality with the equal comparison operator ( `==` ).
 
-### assert.notEqual(actual, expected, [message])
+### notEqual(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -70,7 +73,7 @@ Does not return a value
 #### Description
 Tests shallow, coercive non-equality with the not equal comparison operator ( `!=` ).
 
-### assert.deepEqual(actual, expected, [message])
+### deepEqual(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -86,7 +89,7 @@ Does not return a value
 #### Description
 Tests for deep equality.
 
-### assert.notDeepEqual(actual, expected, [message])
+### notDeepEqual(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -102,7 +105,7 @@ Does not return a value
 #### Description
 Tests for any deep inequality.
 
-### assert.strictEqual(actual, expected, [message])
+### strictEqual(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -118,7 +121,7 @@ Does not return a value
 #### Description
 Tests strict equality, as determined by the strict equality operator ( `===` )
 
-### assert.notStrictEqual(actual, expected, [message])
+### notStrictEqual(actual, expected, [message])
 
 #### Arguments
 - _actual_: `mixed` Actual value to evaluate
@@ -134,7 +137,7 @@ Does not return a value
 #### Description
 Tests strict non-equality, as determined by the strict not equal operator ( `!==` )
 
-### assert.throws(block, [error], [message])
+### throws(block, [error], [message])
 
 #### Arguments
 - _block_: `function` Code to be executed to throw an error (or not) wrapped in a
@@ -185,7 +188,7 @@ Custom error validation:
       "unexpected error"
     );
 
-### assert.doesNotThrow(block, [error], [message])
+### doesNotThrow(block, [error], [message])
 
 #### Arguments
 - _block_: `function` Code to be executed to throw an error (or not) wrapped in a
@@ -203,7 +206,7 @@ Does not return a value
 #### Description
 Expects `block` not to throw an error, see assert.throws for details.
 
-### assert.ifError(value)
+### ifError(value)
 
 #### Arguments
 _value_: *mixed* A false value, e.g. err in a callback
@@ -219,14 +222,11 @@ Tests if value is not a false value, throws if it is a true value. Useful when
 testing the first argument, `error` in callbacks.
 
 
-**Module Exception**
+##Module Exceptions
 
 ### AssertionError
 
-#### Methods
-_toString()_: String serialization
-
-#### Inherits
+#### Inherits From
 `Error`
 
 #### Properties
