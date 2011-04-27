@@ -230,9 +230,9 @@ testing the first argument, `error` in callbacks.
 `Error`
 
 #### Properties
-_name_: `string` Always "AssertionError"
-_message_: `string` Exception message
-_actual_: `mixed` Value generated during assertion test
-_expected_: `mixed` Value to test assertion against
-_operator_: `string` Operator used to compare values
-_startStackFunction_: `function` Function in which exception was thrown
+- _name_: `string` Always "AssertionError"
+- _message_: `string` Exception message
+- _actual_: `mixed` Value generated during assertion test
+- _expected_: `mixed` Value to test assertion against
+- _operator_: `string` Operator used to compare values
+- _startStackFunction_: `function` Function in which exception was thrown
