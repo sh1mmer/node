@@ -1,4 +1,4 @@
-## Child Processes
+# Child Processes
 
 Node provides a tri-directional `popen(3)` facility through the `ChildProcess`
 class.
@@ -13,7 +13,9 @@ Child processes always have three streams associated with them. `child.stdin`,
 
 `ChildProcess` is an `EventEmitter`.
 
-### Event:  'exit'
+## Events
+
+### 'exit'
 
 `function (code, signal) {}`
 
@@ -24,20 +26,56 @@ of the signal, otherwise `null`.
 
 See `waitpid(2)`.
 
-### child.stdin
+## Classes 
+
+### Child
+
+The Child class encapsulates the child processes created by the
+`child_process.spawn()` and `child_process.exec()`
+
+### Methods
+
+#### child.kill(signal='SIGTERM')
+
+**Arguments**
+- _signal (optional)_: `string` the signal to be sent to the
+process. Defaults to `SIGTERM`.
+
+**Description**
+Send a signal to the child process. If no argument is given, the process will
+be sent `'SIGTERM'`. See `signal(7)` for a list of available signals.
+
+    var spawn = require('child_process').spawn,
+        grep  = spawn('grep', ['ssh']);
+
+    grep.on('exit', function (code, signal) {
+      console.log('child process terminated due to receipt of signal '+signal);
+    });
+
+    // send SIGHUP to process
+    grep.kill('SIGHUP');
+
+Note that while the function is called `kill`, the signal delivered to the child
+process may not actually kill it.  `kill` really just sends a signal to a process.
+
+See `kill(2)`
+
+### Properties
+
+#### child.stdin
 
 A `Writable Stream` that represents the child process's `stdin`.
 Closing this stream via `end()` often causes the child process to terminate.
 
-### child.stdout
+#### child.stdout
 
 A `Readable Stream` that represents the child process's `stdout`.
 
-### child.stderr
+#### child.stderr
 
 A `Readable Stream` that represents the child process's `stderr`.
 
-### child.pid
+#### child.pid
 
 The PID of the child process.
 
@@ -49,6 +87,8 @@ Example:
     console.log('Spawned child pid: ' + grep.pid);
     grep.stdin.end();
 
+
+## Module Methods
 
 ### child_process.spawn(command, args=[], [options])
 
@@ -179,22 +219,3 @@ amount of data allowed on stdout or stderr - if this value is exceeded then
 the child process is killed.
 
 
-### child.kill(signal='SIGTERM')
-
-Send a signal to the child process. If no argument is given, the process will
-be sent `'SIGTERM'`. See `signal(7)` for a list of available signals.
-
-    var spawn = require('child_process').spawn,
-        grep  = spawn('grep', ['ssh']);
-
-    grep.on('exit', function (code, signal) {
-      console.log('child process terminated due to receipt of signal '+signal);
-    });
-
-    // send SIGHUP to process
-    grep.kill('SIGHUP');
-
-Note that while the function is called `kill`, the signal delivered to the child
-process may not actually kill it.  `kill` really just sends a signal to a process.
-
-See `kill(2)`
