@@ -76,6 +76,11 @@
 #endif
 #include <node_script.h>
 
+//WTF?!!! you asshole how dare you include these
+#include <iostream.h>
+#include <fstream.h>
+
+
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(*(a)))
 
 using namespace v8;
@@ -2465,14 +2470,42 @@ char** Init(int argc, char *argv[]) {
 
 
 //Profiling stuff
+// stupid class to use as an output stream
+class HeapDump : public OutputStream {
+  protected: 
+    ofstream file;
+
+  public:
+    HeapDump() : 
+      file("heap.dmp", ios::out) {
+    }
+
+    void EndOfStream() {
+      file.close();
+    }
+
+    int GetChunkSize() {
+      return 1024;
+    }
+
+    OutputEncoding GetOutputEncoding() {
+      return kAscii;
+    }
+
+    WriteResult WriteAsciiChunk(char* data, int size) {
+        file.write(data, size);
+    }
+};
 
 Handle<Value> TakeSnapshot(const Arguments& args) {
   HandleScope scope;
 
   Handle<String> title = String::New("");
-
   
   const HeapSnapshot snapshot = *HeapProfiler::TakeSnapshot(title);
+
+  HeapDump *dump = new HeapDump();
+  snapshot.Serialize(dump, HeapSnapshot::kJSON);
 
   return scope.Close(String::New(""));
 }
