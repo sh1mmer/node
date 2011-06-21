@@ -24,6 +24,7 @@
 #include <uv.h>
 
 #include <v8-debug.h>
+#include <v8-profiler.h>
 #include <node_dtrace.h>
 
 #include <locale.h>
@@ -89,6 +90,7 @@ extern char **environ;
 namespace node {
 
 static Persistent<Object> process;
+static Persistent<Object> profiler;
 
 static Persistent<String> errno_symbol;
 static Persistent<String> syscall_symbol;
@@ -104,11 +106,11 @@ static Persistent<String> listeners_symbol;
 static Persistent<String> uncaught_exception_symbol;
 static Persistent<String> emit_symbol;
 
-
 static char *eval_string = NULL;
 static int option_end_index = 0;
 static bool use_debug_agent = false;
 static bool debug_wait_connect = false;
+static bool enable_profiler = false;
 static int debug_port=5858;
 static int max_stack_size = 0;
 
@@ -2153,7 +2155,7 @@ static void SignalExit(int signal) {
 }
 
 
-void Load(Handle<Object> process) {
+void Load(Handle<Object> process, Handle<Object> profiler) {
   // Compile, execute the src/node.js file. (Which was included as static C
   // string in node_natives.h. 'natve_node' is the string containing that
   // source code.)
@@ -2183,7 +2185,7 @@ void Load(Handle<Object> process) {
 
   // Add a reference to the global object
   Local<Object> global = v8::Context::GetCurrent()->Global();
-  Local<Value> args[1] = { Local<Value>::New(process) };
+  Local<Value> args[2] = { Local<Value>::New(process), Local<Value>::New(profiler) };
 
 #ifdef HAVE_DTRACE
   InitDTrace(global);
@@ -2462,6 +2464,56 @@ char** Init(int argc, char *argv[]) {
 }
 
 
+//Profiling stuff
+
+Handle<Value> TakeSnapshot(const Arguments& args) {
+  HandleScope scope;
+
+  Handle<String> title = String::New("");
+
+  
+  const HeapSnapshot snapshot = *HeapProfiler::TakeSnapshot(title);
+
+  return scope.Close(String::New(""));
+}
+
+Handle<Value> GetSnapshotsCount(const Arguments& args) {
+  HandleScope scope;
+
+  Local<Integer> count = Integer::New(HeapProfiler::GetSnapshotsCount());
+
+  return scope.Close(count);
+}
+
+Handle<Value> GetSnapshot(const Arguments& args) {
+  HandleScope scope;
+  if (args.Length() < 1) {
+    return ThrowException(Exception::TypeError(
+          String::New("needs an argument.")));
+  }
+
+  int index = args[0]->Int32Value();
+
+  const HeapSnapshot snapshot = *HeapProfiler::GetSnapshot(index);
+
+  return scope.Close(String::New(""));
+}
+
+Handle<Object> SetupProfilerObject(int argc, char *argv[]) {
+  HandleScope scope;
+
+  Local<FunctionTemplate> profiler_template = FunctionTemplate::New();
+
+  profiler = Persistent<Object>::New(profiler_template->GetFunction()->NewInstance());
+
+  NODE_SET_METHOD(profiler, "takeSnapshot", TakeSnapshot);
+  NODE_SET_METHOD(profiler, "getSnapshotCount", GetSnapshotsCount);
+  NODE_SET_METHOD(profiler, "getSnapshot", GetSnapshot);
+
+  return profiler;
+}
+
+
 void EmitExit(v8::Handle<v8::Object> process) {
   // process.emit('exit')
   Local<Value> emit_v = process->Get(String::New("emit"));
@@ -2488,10 +2540,11 @@ int Start(int argc, char *argv[]) {
   v8::Context::Scope context_scope(context);
 
   Handle<Object> process = SetupProcessObject(argc, argv);
+  Handle<Object> profiler = SetupProfilerObject(argc, argv);
 
   // Create all the objects, load modules, do everything.
   // so your next reading stop should be node::Load()!
-  Load(process);
+  Load(process, profiler);
 
   // All our arguments are loaded. We've evaluated all of the scripts. We
   // might even have created TCP servers. Now we enter the main eventloop. If

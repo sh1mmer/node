@@ -24,7 +24,7 @@
 // This file is invoked by node::Load in src/node.cc, and responsible for
 // bootstrapping the node.js core. Special caution is given to the performance
 // of the startup process, so many dependencies are invoked lazily.
-(function(process) {
+(function(process, profiler) {
   global = this;
 
   function startup() {
@@ -109,6 +109,7 @@
 
   startup.globalVariables = function() {
     global.process = process;
+    global.profiler = profiler;
     global.global = global;
     global.GLOBAL = global;
     global.root = global;
