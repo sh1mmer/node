@@ -2191,7 +2191,7 @@ void Load(Handle<Object> process, Handle<Object> profiler) {
   InitDTrace(global);
 #endif
 
-  f->Call(global, 1, args);
+  f->Call(global, 2, args);
 
   if (try_catch.HasCaught())  {
     ReportException(try_catch, true);
