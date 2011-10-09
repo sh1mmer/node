@@ -13,6 +13,7 @@ node_g
 /.cproject
 
 /out
+/build
 
 # various stuff that VC++ produces/uses
 Debug/
